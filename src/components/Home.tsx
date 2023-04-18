@@ -1,19 +1,32 @@
-import React, { type FC } from "react";
-import Chart from "./Chart";
-import { Container, ListGroup } from "react-bootstrap";
+import React, { type FC, useState } from "react";
+import { Container } from "react-bootstrap";
 import generateCharts from "../mockData/generateCharts";
+import ListCharts from "./ListCharts";
+import Filters from "./Filters";
+
+const initialState = generateCharts(20);
 
 const Home: FC = () => {
-  const charts = generateCharts(20);
+  const [charts, setCharts] = useState(initialState);
+  console.log(charts);
+  const onChange = (from: string, to: string): void => {
+    const fromDate = Date.parse(from);
+    const toDate = Date.parse(to);
+    setCharts(
+      initialState.filter((el) => {
+        console.log(el.name, el.data.at(-1)?.date.getTime(), toDate);
+        return (
+          el.data[0]?.date.getTime() > fromDate &&
+          (el.data.at(-1)?.date.getTime() ?? Infinity) < toDate
+        );
+      })
+    );
+  };
+
   return (
     <Container>
-      <ListGroup>
-        {charts.map((el) => (
-          <ListGroup.Item key={el.id}>
-            <Chart chart={el} />o
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+      <Filters onFiltersChange={onChange} />
+      <ListCharts charts={charts} />
     </Container>
   );
 };

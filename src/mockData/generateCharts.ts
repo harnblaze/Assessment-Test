@@ -9,12 +9,15 @@ const generateCharts = (quantity: number): IChart[] => {
       name: faker.address.country(),
       type: "line",
       color: faker.color.rgb({ prefix: "#", casing: "upper" }),
-      data: new Array(10).fill("_").map((el) => {
-        return {
-          value: faker.datatype.number(1000),
-          date: faker.date.past(),
-        };
-      }),
+      data: new Array(10)
+        .fill("_")
+        .map((el) => {
+          return {
+            value: faker.datatype.number(1000),
+            date: faker.date.past(),
+          };
+        })
+        .sort((a, b) => b.date.getTime() - a.date.getTime()),
     });
   }
   return charts;

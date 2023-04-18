@@ -1,4 +1,4 @@
-import { type IDataChart } from "./types/chart.types";
+import { type IDataChart } from "../types/chart.types";
 
 export const formatDataForChart = (
   data: IDataChart[]

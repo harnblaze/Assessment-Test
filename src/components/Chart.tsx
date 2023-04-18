@@ -2,7 +2,7 @@ import React, { type FC } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { type IChart } from "../types/chart.types";
-import { formatDataForChart } from "../utils";
+import { formatDataForChart } from "../utils/formatDataForChart";
 
 interface IChartProps {
   chart: IChart;
@@ -19,11 +19,14 @@ const Chart: FC<IChartProps> = ({ chart }) => {
       text: chart.name,
     },
     yAxis: {
+      type: "linear",
+    },
+    xAxis: {
       type: "datetime",
     },
-
     series: [
       {
+        name: chart.name,
         data,
         color: chart.color,
       },
