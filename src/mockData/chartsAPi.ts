@@ -1,5 +1,5 @@
 import generateCharts from "./generateCharts";
-import { type IChart } from "../src/types/chart.types";
+import { type IChart } from "../types/chart.types";
 
 const NUMBER_OF_CHARTS = 20;
 

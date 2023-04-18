@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
-import { type IChart } from "../src/types/chart.types";
+import { type IChart } from "../types/chart.types";
 
 const generateCharts = (quantity: number): IChart[] => {
-  const chart = [];
+  const charts = [];
   for (let id = 0; id < quantity; id++) {
-    chart.push({
+    charts.push({
       id: faker.datatype.uuid(),
       name: faker.address.country(),
       type: "line",
@@ -12,12 +12,12 @@ const generateCharts = (quantity: number): IChart[] => {
       data: new Array(10).fill("_").map((el) => {
         return {
           value: faker.datatype.number(1000),
-          date: faker.datatype.datetime(),
+          date: faker.date.past(),
         };
       }),
     });
   }
-  return chart;
+  return charts;
 };
 
 export default generateCharts;

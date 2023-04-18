@@ -22,6 +22,6 @@
   },
   "include": [
     "src",
-    "mockData"
+    "src/mockData"
   ]
 }
