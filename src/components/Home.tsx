@@ -1,32 +1,42 @@
-import React, { type FC, useState } from "react";
+import React, { type FC, useMemo } from "react";
 import { Container } from "react-bootstrap";
-import generateCharts from "../mockData/generateCharts";
 import ListCharts from "./ListCharts";
 import Filters from "./Filters";
-
-const initialState = generateCharts(20);
+import { useTypedSelector } from "../hooks/useTypedSelector";
+import {
+  getCharts,
+  getChartsErrors,
+  getChartsLoadingStatus,
+  getFilters,
+} from "../store/ActionCreators/chartsActionCreators";
+import ErrorMessage from "./ErrorMessage";
+import Loader from "./Loader";
+import NoCharts from "./NoCharts";
 
 const Home: FC = () => {
-  const [charts, setCharts] = useState(initialState);
-  console.log(charts);
-  const onChange = (from: string, to: string): void => {
-    const fromDate = Date.parse(from);
-    const toDate = Date.parse(to);
-    setCharts(
-      initialState.filter((el) => {
-        console.log(el.name, el.data.at(-1)?.date.getTime(), toDate);
-        return (
-          el.data[0]?.date.getTime() > fromDate &&
-          (el.data.at(-1)?.date.getTime() ?? Infinity) < toDate
-        );
-      })
-    );
-  };
+  const charts = useTypedSelector(getCharts());
 
+  const chartsStatusLoading = useTypedSelector(getChartsLoadingStatus());
+  const chartsError = useTypedSelector(getChartsErrors());
+  const { fromDate, toDate } = useTypedSelector(getFilters());
+  const filteredCharts = useMemo(
+    () =>
+      charts.filter(
+        (chart) =>
+          chart.data[0].date > Date.parse(fromDate) &&
+          (chart.data.at(-1)?.date as number) < Date.parse(toDate)
+      ),
+    [fromDate, toDate, charts]
+  );
+
+  if (chartsError !== null) return <ErrorMessage message={chartsError} />;
+  if (chartsStatusLoading) return <Loader />;
+
+  if (filteredCharts.length === 0) return <NoCharts />;
   return (
     <Container>
-      <Filters onFiltersChange={onChange} />
-      <ListCharts charts={charts} />
+      <Filters />
+      <ListCharts charts={filteredCharts} />
     </Container>
   );
 };

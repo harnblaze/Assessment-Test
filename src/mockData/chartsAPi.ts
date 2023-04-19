@@ -3,13 +3,13 @@ import { type IChart } from "../types/chart.types";
 
 const NUMBER_OF_CHARTS = 20;
 
-const chartsAPi = generateCharts(NUMBER_OF_CHARTS);
+const charts = generateCharts(NUMBER_OF_CHARTS);
 
-if (localStorage.getItem("chartsAPi") === null) {
-  localStorage.setItem("chartsAPi", JSON.stringify(chartsAPi));
+if (localStorage.getItem("charts") === null) {
+  localStorage.setItem("charts", JSON.stringify(charts));
 }
 
-const localStorageCharts = localStorage.getItem("chartsAPi") as string;
+const localStorageCharts = localStorage.getItem("charts") as string;
 
 const fetchAll = async (): Promise<IChart[]> =>
   await new Promise((resolve) => {
@@ -23,8 +23,8 @@ const update = async (id: string, data: IChart): Promise<IChart[]> =>
   await new Promise((resolve) => {
     const chartsArray = JSON.parse(localStorageCharts);
     const userIndex = chartsArray.findIndex((chart: IChart) => chart.id === id);
-    chartsAPi[userIndex] = { ...chartsArray[userIndex], ...data };
-    localStorage.setItem("chartsAPi", JSON.stringify(chartsArray));
+    charts[userIndex] = { ...chartsArray[userIndex], ...data };
+    localStorage.setItem("charts", JSON.stringify(chartsArray));
     resolve(chartsArray[userIndex]);
   });
 

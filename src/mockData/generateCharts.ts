@@ -14,10 +14,10 @@ const generateCharts = (quantity: number): IChart[] => {
         .map((el) => {
           return {
             value: faker.datatype.number(1000),
-            date: faker.date.past(),
+            date: faker.date.past().getTime(),
           };
         })
-        .sort((a, b) => b.date.getTime() - a.date.getTime()),
+        .sort((a, b) => a.date - b.date),
     });
   }
   return charts;

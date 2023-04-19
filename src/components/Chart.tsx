@@ -1,8 +1,11 @@
 import React, { type FC } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
+import Accessibility from "highcharts/modules/accessibility";
 import { type IChart } from "../types/chart.types";
 import { formatDataForChart } from "../utils/formatDataForChart";
+
+Accessibility(Highcharts);
 
 interface IChartProps {
   chart: IChart;
@@ -44,4 +47,5 @@ const Chart: FC<IChartProps> = ({ chart }) => {
   );
 };
 
-export default Chart;
+const MemoChart = React.memo(Chart);
+export default MemoChart;

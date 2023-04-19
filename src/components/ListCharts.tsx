@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import React, { type FC, memo } from "react";
 import { ListGroup } from "react-bootstrap";
 import Chart from "./Chart";
 import { type IChart } from "../types/chart.types";
@@ -20,5 +20,5 @@ const ListCharts: FC<IListChartsProps> = ({ charts }) => {
     </div>
   );
 };
-
-export default ListCharts;
+const MemoListCharts = memo(ListCharts);
+export default MemoListCharts;

@@ -1,6 +1,6 @@
 export interface IDataChart {
   value: number;
-  date: Date;
+  date: number;
 }
 
 export interface IChart {

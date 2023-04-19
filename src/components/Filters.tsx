@@ -1,13 +1,31 @@
-import React, { type FC, useState } from "react";
+import React, { type FC, useEffect, useState } from "react";
 import { Col, Form, InputGroup, Row } from "react-bootstrap";
+import { useTypedSelector } from "../hooks/useTypedSelector";
+import {
+  changeFilters,
+  getFilters,
+} from "../store/ActionCreators/chartsActionCreators";
+import { useAppDispatch } from "../hooks/useTypedDispatch";
+import { formatDateForInput } from "../utils/formatDateForInput";
 
-interface IFilterProps {
-  onFiltersChange: (from: string, to: string) => void;
-}
+const Filters: FC = () => {
+  const dispatch = useAppDispatch();
+  const { toDate, fromDate } = useTypedSelector(getFilters());
+  const [inputFrom, setInputFrom] = useState(fromDate);
+  const [inputTo, setInputTo] = useState(toDate);
 
-const Filters: FC<IFilterProps> = ({ onFiltersChange }) => {
-  const [fromDate, setFromDate] = useState("2022-01-01");
-  const [toDate, setToDate] = useState("2023-04-18");
+  const onFromFilterChange = (from: string): void => {
+    setInputFrom(from);
+    dispatch(changeFilters(from, toDate));
+  };
+  const onToFilterChange = (to: string): void => {
+    setInputTo(to);
+    dispatch(changeFilters(fromDate, to));
+  };
+
+  useEffect(() => {
+    dispatch(changeFilters("2022-01-01", formatDateForInput(Date.now())));
+  }, []);
 
   return (
     <Row lg={4} xs={1} className="mt-3">
@@ -18,10 +36,9 @@ const Filters: FC<IFilterProps> = ({ onFiltersChange }) => {
             type="date"
             placeholder="from"
             aria-label="from date"
-            value={fromDate}
+            value={inputFrom}
             onChange={(event) => {
-              setFromDate(event.target.value);
-              onFiltersChange(event.target.value, toDate);
+              onFromFilterChange(event.target.value);
             }}
           />
         </InputGroup>
@@ -33,10 +50,9 @@ const Filters: FC<IFilterProps> = ({ onFiltersChange }) => {
             type="date"
             placeholder="to"
             aria-label="to date"
-            value={toDate}
+            value={inputTo}
             onChange={(event) => {
-              setToDate(event.target.value);
-              onFiltersChange(fromDate, event.target.value);
+              onToFilterChange(event.target.value);
             }}
           />
         </InputGroup>
