@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+# Assessment Test for Frontend Developers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### The task.
 
-## Available Scripts
+Create a Single page web application for displaying the list of charts using React and
+TypeScript.
+Libraries that should be used:
 
-In the project directory, you can run:
+- MUI / React Bootstrap / or others;
+- Highcharts;
+- Any other library of your choice.
+- Advanced. It will be good if you do it with Redux state manager (or others) and some
+  middlewares like Redux Thunk or Redux Saga but it's not required.
 
-### `npm start`
+#### Details.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The UI must be responsive.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+There will be a header with two links to two separated routes. One of them should be active
+connected with the current route.
 
-### `npm test`
+"View mode" is the first route. There will be a list of charts and a date range filter (filtering by
+dates). Selected dates should affect charts on the page. Date range filter should be hidden if we
+have no charts.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The data for the charts could be either randomly generated or fetched via any public API for one
+or for all charts. Each value should have a “value” and “date” fields. The default value for date
+range filter you can set by yourself.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+"Settings" is the second route. There will be a list of charts. Users should have the possibility to
+add a new chart or edit an existing one. Those settings should be implemented with a modal
+window. It should be possible to change a name, type (line, spline, area…) and color for each of
+them. Also we should have the possibility to remove the chart. After saving, new settings will be
+applied.
