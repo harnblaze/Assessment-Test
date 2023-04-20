@@ -39,6 +39,20 @@ const chartSlice = createSlice({
       state.fromDate = action.payload.fromDate;
       state.toDate = action.payload.toDate;
     },
+    newChartAdded: (state, action: PayloadAction<IChart>) => {
+      state.entities.push(action.payload);
+      state.isLoading = false;
+    },
+    chartUpdateSuccess: (state, action: PayloadAction<IChart>) => {
+      state.entities[
+        state.entities.findIndex((chart) => chart.id === action.payload.id)
+      ] = action.payload;
+      state.isLoading = false;
+    },
+    chartRemoveSuccess: (state, action: PayloadAction<IChart[]>) => {
+      state.entities = action.payload;
+      state.isLoading = false;
+    },
   },
 });
 

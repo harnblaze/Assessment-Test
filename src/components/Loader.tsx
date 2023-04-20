@@ -5,7 +5,7 @@ const Loader: FC = () => {
   return (
     <Container>
       <h2 className="d-flex justify-content-center mt-3">
-        <Badge bg="secondary">
+        <Badge>
           Loading...
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>

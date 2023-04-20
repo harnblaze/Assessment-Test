@@ -1,23 +1,17 @@
 import React, { type FC, useMemo } from "react";
-import { Container } from "react-bootstrap";
 import ListCharts from "./ListCharts";
 import Filters from "./Filters";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import {
   getCharts,
-  getChartsErrors,
-  getChartsLoadingStatus,
   getFilters,
 } from "../store/ActionCreators/chartsActionCreators";
-import ErrorMessage from "./ErrorMessage";
-import Loader from "./Loader";
+import MainLayout from "../layouts/MainLayout";
 import NoCharts from "./NoCharts";
 
 const Home: FC = () => {
   const charts = useTypedSelector(getCharts());
 
-  const chartsStatusLoading = useTypedSelector(getChartsLoadingStatus());
-  const chartsError = useTypedSelector(getChartsErrors());
   const { fromDate, toDate } = useTypedSelector(getFilters());
   const filteredCharts = useMemo(
     () =>
@@ -29,15 +23,18 @@ const Home: FC = () => {
     [fromDate, toDate, charts]
   );
 
-  if (chartsError !== null) return <ErrorMessage message={chartsError} />;
-  if (chartsStatusLoading) return <Loader />;
+  if (filteredCharts.length === 0)
+    return (
+      <MainLayout>
+        <NoCharts />
+      </MainLayout>
+    );
 
-  if (filteredCharts.length === 0) return <NoCharts />;
   return (
-    <Container>
+    <MainLayout>
       <Filters />
       <ListCharts charts={filteredCharts} />
-    </Container>
+    </MainLayout>
   );
 };
 

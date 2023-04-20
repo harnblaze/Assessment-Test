@@ -5,7 +5,7 @@ const NoCharts: FC = () => {
   return (
     <Container>
       <h2 className="d-flex justify-content-center mt-3">
-        <Badge bg="secondary">No charts to show</Badge>
+        <Badge>No charts to show</Badge>
       </h2>
     </Container>
   );
